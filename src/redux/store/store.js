@@ -1,15 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux'; // Import combineReducers
-import dictionary from '../reducers/dictionarySlice';
-import history from '../reducers/historySlice';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'; // Import Redux Thunk
+import dictionaryReducer from '../reducers/dictionaryReducer'; // Import your dictionary reducer
+import historyReducer from '../reducers/historyReducer'; // Import your history reducer
 
+// Combine reducers
 const rootReducer = combineReducers({
-  dictionary: dictionary,
-  history: history,
+  dictionary: dictionaryReducer,
+  history: historyReducer,
 });
 
-const store = configureStore({
-  reducer: rootReducer, // Use the combined rootReducer
-});
+// Create the Redux store with middleware
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;
